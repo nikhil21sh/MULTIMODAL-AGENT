@@ -1,0 +1,31 @@
+# render.yaml
+# For a project with frontend.py and backend.py in the root directory.
+
+services:
+  # ---- Backend Service (FastAPI) ----
+  - type: web
+    name: bot-backend
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    # Runs backend.py; assumes your FastAPI app instance is named 'app'
+    startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10 # Or your desired Python version
+
+  # ---- Frontend Service (Streamlit) ----
+  - type: web
+    name: bot-frontend
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    # Runs frontend.py
+    startCommand: "streamlit run frontend.py --server.port $PORT --server.headless true"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10 # Or your desired Python version
+      # Automatically get the live URL of the backend service
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: bot-backend
+          property: url
