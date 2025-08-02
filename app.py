@@ -11,21 +11,20 @@ from langchain_tavily import TavilySearch
 from langchain_core.messages import HumanMessage,AIMessage
 from langchain_core.prompts import ChatPromptTemplate,SystemMessagePromptTemplate,MessagesPlaceholder
 
-
-
-
-
-
 from langgraph.prebuilt import create_react_agent
 def get_response_from_agent(model_name,model_provider,system_prompt,messages,allow_search):
         if model_provider=="Groq":
             llm=ChatGroq(model=model_name)
+        elif model_provider=="OpenAI":
+            llm=ChatOpenAI(model=model_name)
         prompt=ChatPromptTemplate.from_messages(
             [
             ("system",system_prompt),
             MessagesPlaceholder(variable_name="messages")
             ]
         )
+
+            
         tools=[TavilySearch(max_results=2,api_key=TAVILY_API_KEY)] if allow_search else []
         agent=create_react_agent(
              model=llm,

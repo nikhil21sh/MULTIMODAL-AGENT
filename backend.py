@@ -9,7 +9,7 @@ class RequestState(BaseModel):
 from app import get_response_from_agent
 from fastapi import FastAPI
 app=FastAPI(title="LangGraph AI Agent")
-allowed_model_names=["llama-3.3-70b-versatile","gemma2-9b-it","llama-3.1-8b-instant"]
+allowed_model_names=["llama-3.3-70b-versatile","gemma2-9b-it","llama-3.1-8b-instant","gpt-4o","gpt-3.5-turbo"]
 @app.post("/chat/")
 def chat_endpoint(request:RequestState):
     """
