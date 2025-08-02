@@ -1,5 +1,5 @@
 # render.yaml
-# For a project with frontend.py and backend.py in the root directory.
+# Corrected version for deploying a FastAPI backend and Streamlit frontend.
 
 services:
   # ---- Backend Service (FastAPI) ----
@@ -23,9 +23,10 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10 # Or your desired Python version
-      # Automatically get the live URL of the backend service
+      # --- FIX IS HERE ---
+      # We now construct the internal URL for the backend service.
+      # Render services can talk to each other using their name as the hostname.
+      # The default internal port for web services is 10000.
       - key: BACKEND_URL
-        fromService:
-          type: web
-          name: bot-backend
-          property: url
+        value: http://bot-backend:10000/chat
+
