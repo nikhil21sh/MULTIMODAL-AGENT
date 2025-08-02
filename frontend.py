@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 st.set_page_config(page_title="LangGraph Agent",layout="centered")
 st.title("AI CHATBOT AGENTS")
 st.write("Create and Interact with AI Agents ! ")
@@ -12,7 +13,9 @@ elif provider is "OpenAI":
     selected_model=st.selectbox("Select OpenAI Models :",OPENAI_MODEL_NAMES) 
 allow_websearch=st.checkbox("Allow Web Search")
 user_query=st.text_area("What would you like to know ?  ", height=200,placeholder="Type your question here.....")
-backend_url="http://127.0.0.1:9999/chat"
+
+backend_url=os.getenv("BACKEND_URL", "http://127.0.0.1:9999/chat")
+
 if st.button("Ask your agent !!"):
     if user_query.strip():
         import requests

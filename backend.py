@@ -28,6 +28,6 @@ def chat_endpoint(request:RequestState):
     response=get_response_from_agent(model_name=model_name,model_provider=model_provider,system_prompt=system_prompt,messages=messages,allow_search=allow_search)
     return response
 
-if __name__== "__main__":
-    import uvicorn
-    uvicorn.run(app,host="127.0.0.1",port=9999)
+# if __name__== "__main__":
+#     import uvicorn
+#     uvicorn.run(app,host="127.0.0.1",port=9999)
